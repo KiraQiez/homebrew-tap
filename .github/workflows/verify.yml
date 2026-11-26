@@ -23,17 +23,29 @@ jobs:
       - name: Install public formula
         id: install
         shell: bash
+        env:
+          XDG_CONFIG_HOME: ${{ runner.temp }}/drift-brew-config
         run: |
+          # Keep runner-provided third-party taps out of Homebrew's discovery.
+          runner_taps="$(brew tap)"
+          while IFS= read -r runner_tap; do
+            case "$runner_tap" in ""|homebrew/*) continue ;; esac
+            parked="$RUNNER_TEMP/drift-runner-taps/$runner_tap"
+            mkdir -p "$(dirname "$parked")"
+            mv "$(brew --repository "$runner_tap")" "$parked"
+          done <<< "$runner_taps"
           formula=KiraQiez/tap/drift
+          brew tap KiraQiez/tap
+          tap="$(brew --repository KiraQiez/tap)"
+          test "$(git -C "$tap" rev-parse HEAD)" = "$GITHUB_SHA"
+          ruby -c "$tap/Formula/drift.rb"
+          expected="$(sed -nE 's/^  version "([0-9]+\.[0-9]+\.[0-9]+)"$/\1/p' "$tap/Formula/drift.rb")"
+          test -n "$expected"
           brew install "$formula"
-          brew readall --syntax KiraQiez/tap
           brew test "$formula"
           executable="$(brew --prefix "$formula")/bin/drift"
-          version="$("$executable" --version)"
-          if [[ ! "$version" =~ ^drift\ ([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-            exit 1
-          fi
-          echo "tag=v${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          test "$("$executable" --version)" = "drift $expected"
+          echo "tag=v$expected" >> "$GITHUB_OUTPUT"
           echo "DRIFT_TEST_EXECUTABLE=$executable" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

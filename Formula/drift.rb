@@ -3,9 +3,9 @@ class Drift < Formula
 
   desc "Track changes in local development environments"
   homepage "https://github.com/KiraQiez/Drift"
-  url "https://files.pythonhosted.org/packages/46/fa/28fb595335257fb6bdab4ae2687767014b37b3a0cf56829653e97641660e/drift_dev_env-0.1.0.tar.gz"
-  version "0.1.0"
-  sha256 "21430f8da3ddbcc783aa3f96b8968b676ab57851f65e346bda97e2450760237c"
+  url "https://files.pythonhosted.org/packages/b0/a9/5a63faf9d638da9794623f4412cedd92ff3c01187d91d006835cd7151732/drift_dev_env-0.2.0.tar.gz"
+  version "0.2.0"
+  sha256 "96691806fbecadbaa4e976a11af5bdd4f9a31d0bd786e9de9bb5483f1cc63f0c"
   license "Apache-2.0"
 
   depends_on :macos

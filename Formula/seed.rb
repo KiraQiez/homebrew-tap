@@ -3,9 +3,9 @@ class Seed < Formula
 
   desc "Schema-aware synthetic data for development and testing"
   homepage "https://github.com/KiraQiez/Seed"
-  url "https://files.pythonhosted.org/packages/9e/4b/cd55c276627d52064db119a81ea3274da36adde31334e4a923758b036b70/seed_dev_db-0.1.0.tar.gz"
-  version "0.1.0"
-  sha256 "d353c1cf6983374309110d0aff6437f61b7e3f4c9dda681e72009c9eba6cc745"
+  url "https://files.pythonhosted.org/packages/cd/f2/81fb93ed12ff5bb5670f6275c434a8902d8326f5edd480f913bcb3fd8569/seed_dev_db-0.2.0.tar.gz"
+  version "0.2.0"
+  sha256 "f555f08ef07e014646560dc4c34c3e9cc0213e846cc2f00553a1c8401d093543"
   license "Apache-2.0"
 
   depends_on "python@3.14"
